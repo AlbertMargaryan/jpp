@@ -1,3 +1,5 @@
+/* ARRAYS */
+
 /*
 @name: chunk
 @description: Generates an array by dividing its elements into groups of a specified size. In cases where the array cannot be evenly divided, the last segment will contain the remaining elements.
@@ -167,3 +169,111 @@ function first(array) {
   return (array && array.length) ? array[0] : undefined;
 }
 
+
+/*
+* @name: flatten
+* @description: Recursively and fully flattens array.
+* @arguments: array (Array): The array to process.; 
+* @return: (Array) Returns the new flattened to one level array 
+*/
+
+
+function flatten(array) {
+    let result = []
+    array.forEach((e) => {
+      if (Array.isArray(e)) {
+        result.push(flatten(e));
+      }
+      else {
+        result.push(e);
+      }
+    })
+    return result;
+}
+
+/*
+* @name: flatten
+* @description: Flatens by one depth
+* @arguments: array (Array): The array to process.; 
+* @return: (Array) Returns the new flattened by one level 
+*/
+
+function flattenOne(array) {
+    let result = []
+    array.forEach((e) => {
+      if (typeof(e) === 'object') {
+        e.forEach((element) => {
+          result.push(element);
+        })
+      }
+      else {
+        result.push(e);
+      }
+    })
+    return result;  
+}
+
+
+/*
+* @name: flattenDepth
+* @description: Flattens array to a specific depth
+* @arguments: array (Array): The array to process.
+*             depth (number): The maximum recursion depth.
+* @return: (Array) Returns the new flattened array.
+*/
+
+function flattenDepth(array, depth) {
+  let result = [];
+
+  function flattenRecursively(arr, currentDepth) {
+    arr.forEach((element) => {
+      if (Array.isArray(element) && currentDepth <= depth) {
+        flattenRecursively(element, currentDepth + 1);
+      } else {
+        result.push(element);
+      }
+    });
+  }
+
+  flattenRecursively(array, 1);
+  return result;
+}
+
+/*
+* @name: sumArray
+* @description: Returns the sum of all numbers in the array, at any level of nesting.
+* @arguments: array (Array): The array to process.
+* @return: (number) Sum of all numbers in the array.
+*/
+
+function sumArray(array) {
+    result = 0
+    array.forEach((e) => {
+      if (Array.isArray(e)) {
+        result += sumArray(e);
+      }
+      else if (typeof(e) === 'number') {
+        result += e;
+      }
+    });
+
+    return result;
+}
+
+/*
+* @name: fromPairs
+* @description: Returns an object containing the pairs from the given array
+* @arguments: array (Array): The array to be converted into object.
+* @return: (Object) the new Object.
+*/
+
+function fromPairs(array) {
+    result = {};
+    array.forEach((e) => {
+      result[e[0]] = e[1]
+    });
+
+    return result;
+}
+
+console.log(fromPairs([['a', 1], ['b', 2], [5, "c"], ['a', 7]]));
