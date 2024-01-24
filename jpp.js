@@ -272,8 +272,134 @@ function fromPairs(array) {
     array.forEach((e) => {
       result[e[0]] = e[1]
     });
-
     return result;
 }
 
-console.log(fromPairs([['a', 1], ['b', 2], [5, "c"], ['a', 7]]));
+/*
+* @name: indexOf
+* @description: Returns index of a value starting from the [fromIndex] position (default 0)
+* @arguments: array (Array): The array to be searched in.
+*             value (*): Any value in array to be found
+*             [fromIndex=0] (number): Position at which the search begins
+* @return: (number) the index.
+*/
+
+function indexOf(array, value, fromIndex=0) {
+  for (let i = fromIndex; i < array.length; i++) {
+    if (array[i] === value) {
+      return i;
+    }
+  }
+  return undefined;
+}
+
+/*
+* @name: indexesOf
+* @description: Returns all indexes of a value starting from the [fromIndex] position (default 0)
+* @arguments: array (Array): The array to be searched in.
+*             value (*): Any value in array to be found
+*             [fromIndex=0] (number): Position at which the search begins
+* @return: (Array) the processed array.
+*/
+
+function indexesOf(array, value, fromIndex=0) {
+  let result = []
+  for (let i = fromIndex; i < array.length; i++) {
+    if (array[i] === value) {
+      result.push(i);
+    }
+  }
+  return result;
+}
+
+/*
+* @name: initial
+* @description: Returns the array without its last element
+* @arguments: array (Array): The array to be processed.
+* @return: (Array) the new array.
+*/
+
+function initial(array) {
+  return array.slice(0, array.length-1);
+}
+
+/*
+* @name: intersect
+* @description: Creastes a new array of elements intersecting in all arrays
+* @arguments: ...arrays (Arrays): The arrays to be processed.
+* @return: (Array) the new array.
+*/
+
+function intersect(...arrays) {
+  result = arrays ? arrays[0] : [];
+  for (let i = 1; i < arrays.length; i++) {
+      result = result.filter(Set.prototype.has, new Set(arrays[i]));
+  }
+  return Array.from(new Set(result));
+}
+
+/*
+* @name: join
+* @description: Joins elements of array by separator, like in native JS
+* @arguments: array (Array): The arrays to be processed.
+*             separator (*): Any separator that can be used for native JS Array.prototypes.join
+* @return: (String) the processed string.
+*/
+
+function join(array, separator) {
+    return array == null ? '' : array.join(separator);
+}
+
+
+/*
+* @name: last
+* @description: Returns the last element of the array
+* @arguments: array (Array): The arrays to be processed.
+* @return: (*) Any last element of an array.
+*/
+
+function last(array) {
+    return array == null ? undefined : array[array.length-1];
+}
+
+/*
+* @name: lastIndexOf
+* @description: The same function as indexOf, but it iterates from right to left.
+* @arguments: array (Array): The array to be searched in.
+*             value (*): Any value in array to be found
+*             [fromIndex=0] (number): Position at which the search begins
+* @return: (number) the index.
+*/
+
+function lastIndexOf(array, value, fromIndex=array.length-1) {
+  for (let i = fromIndex; i === 0; i--){
+    if (array[i] === value) {
+      return i;
+    }
+  }
+  return undefined;
+}
+
+/*
+* @name: last
+* @description: Returns the n-th element of the array. If n is negative, the nth element from the end is returned.
+* @arguments: array (Array): The arrays to be processed.
+*             n (number): The index of element to be found.
+* @return: (*) Returns the nth element of an array.
+*/
+
+function nth(array, n=0) {
+  return n >= 0 ? array[n] : array[array.length+n];
+}
+
+/*
+* @name: pull
+* @description: Removes all given values from array
+* @arguments: array (Array): The array to be processed.
+*             ...values (*): Any values to be removed.
+* @return: (Array) The new array.
+*/
+
+function pull(array, ...values) {
+  return !array ? undefined : array.filter(x => !values.includes(x));
+}
