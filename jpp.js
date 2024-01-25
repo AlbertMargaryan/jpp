@@ -1,10 +1,22 @@
 /* ARRAYS */
 
+
+/*
+* @name: array
+* @description: Makes an array out of all values given
+* @arguments: ...values (*): Any values to be inserted
+* @return: (Array) The new array
+*/
+
+function array(...values) {
+  return values;
+}
+
 /*
 @name: chunk
 @description: Generates an array by dividing its elements into groups of a specified size. In cases where the array cannot be evenly divided, the last segment will contain the remaining elements.
 @arguments: array (Array): The array to process. [size=1] (Int): The length of each chunk
-@return: array
+@return: (Array)
 */
 
 function chunk(arr, size = 1) {
@@ -182,7 +194,7 @@ function flatten(array) {
     let result = []
     array.forEach((e) => {
       if (Array.isArray(e)) {
-        result.push(flatten(e));
+        result.push(...flatten(e));
       }
       else {
         result.push(e);
@@ -201,7 +213,7 @@ function flatten(array) {
 function flattenOne(array) {
     let result = []
     array.forEach((e) => {
-      if (typeof(e) === 'object') {
+      if (Array.isArray(e)) {
         e.forEach((element) => {
           result.push(element);
         })
@@ -403,3 +415,131 @@ function nth(array, n=0) {
 function pull(array, ...values) {
   return !array ? undefined : array.filter(x => !values.includes(x));
 }
+
+/*
+* @name: pullAll
+* @description: Removes all given values from array given an array of values
+* @arguments: array (Array): The array to be processed.
+*             values (Array): Any values to be removed in array.
+* @return: (Array) The new array.
+*/
+
+function pullAll(array, values) {
+  return !array ? undefined : array.filter(x => !values.includes(x));
+}
+
+/*
+* @name: pullAt
+* @description: Removes all given values from array given an array of indexes
+* @arguments: array (Array): The array to be processed.
+*             values (Array): Any values to be removed in array.
+* @return: (Array) The new array.
+*/
+
+function pullAt(array, ...indexes) {
+  flatten(indexes).sort((a, b) => b - a).forEach((i) => {
+    array.splice(i, 1);
+  });
+  return array;
+}
+
+/*
+* @name: sort
+* @description: Sorts an array in descending order
+* @arguments: array (Array): The array to be processed.
+* @return: (Array) The new array.
+*/
+
+function reverseSort(array) {
+  return array.sort((a, b) => b - a);
+}
+
+/*
+* @name: sort
+* @description: Sorts an array in ascedning order
+* @arguments: array (Array): The array to be processed.
+* @return: (Array) The new array.
+*/
+
+function sort(array) {
+  return array.sort((a, b) => a - b);
+}
+
+/*
+* @name: sortedIndex
+* @description: Finds the least place to insert value so that the array remains sorted
+* @arguments: array (Array): The array to be processed.
+*             value (number): The value that needs to be inserted
+* @return: (number) The index to be inserted at.
+*/
+
+function sortedIndex(array, value) {
+  let low = 0;
+  let high = array.length;
+
+  while (low < high) {
+    const mid = Math.floor((low + high) / 2);
+
+    if (array[mid] < value) {
+      low = mid + 1;
+    } else {
+      high = mid;
+    }
+  }
+
+  return low;
+}
+
+/*
+* @name: sortedIndex
+* @description: Finds the highest place to insert value so that the array remains sorted
+* @arguments: array (Array): The array to be processed.
+*             value (number): The value that needs to be inserted
+* @return: (number) The index to be inserted at.
+*/
+
+function sortedIndexLast(array, value) {
+  let low = 0;
+  let high = array.length;
+
+  while (low < high) {
+    const mid = Math.floor((low + high) / 2);
+
+    if (array[mid] <= value) {
+      low = mid + 1;
+    } else {
+      high = mid;
+    }
+  }
+
+  return low;
+}
+
+/*
+* @name: sortedUnique
+* @description: Leaves only unique elements of an array. Optimized and works for sorted arrays only!
+* @arguments: array (Array): The array to be processed.
+* @return: (Array) The processed array.
+*/
+
+function sortedUnique(array) {
+  for (let i = array.length-1; i > 0; i--) {
+    if (array[i] === array[i-1]) {
+      array.splice(i, 1);
+    }
+  }
+  return array;
+}
+
+/*
+* @name: tail
+* @description: Returns all but first element of an array
+* @arguments: array (Array): The array to be processed.
+* @return: (Array) The processed array.
+*/
+
+function tail(array) {
+  return array ? array.slice(1) : undefined;
+}
+
+console.log(tail())
