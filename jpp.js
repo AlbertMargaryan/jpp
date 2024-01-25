@@ -542,4 +542,141 @@ function tail(array) {
   return array ? array.slice(1) : undefined;
 }
 
-console.log(tail())
+/*
+* @name: take
+* @description: Returns an array of n elements taken from the front
+* @arguments: array (Array): The array to be processed.
+*             n (number): number of elements to be taken
+* @return: (Array) The processed array.
+*/
+
+function take(array, n=1) {
+  return array.splice(0, n);
+}
+
+/*
+* @name: take
+* @description: Same as take() but takes elements from end
+* @arguments: array (Array): The array to be processed.
+*             n (number): number of elements to be taken
+* @return: (Array) The processed array.
+*/
+
+function takeRight(array, n=1) {
+  return array.splice(array.length-n, n);
+}
+
+/*
+* @name: union
+* @description: Makes union array of all unique arrays provided
+* @arguments: arrays (...Array): The arrays to be processed.
+* @return: (Array) The processed array.
+*/
+
+function union(...arrays) {
+  const result = new Set();
+
+  arrays.forEach((array) => {
+    array.forEach((element) => {
+      result.add(element);
+    });
+  });
+
+  return Array.from(result);
+}
+
+/*
+* @name: sortedUnique
+* @description: Leaves only unique elements of an array.
+* @arguments: array (Array): The array to be processed.
+* @return: (Array) The processed array.
+*/
+
+function unique(array) {
+  return Array.from(new Set(array));
+}
+
+/*
+* @name: unzip
+* @description: This method is like _.zip except that it accepts an array of grouped elements and creates an array regrouping the elements to their pre-zip configuration.
+* @arguments: array (Array): The array to be processed.
+* @return: (Array) The processed array.
+*/
+
+
+function unzip(array) {
+  if (!Array.isArray(array) || array.length === 0) {
+    return [];
+  }
+  const length = array[0].length;
+  const result = Array.from({ length }, (_, index) =>
+    array.map(subarray => subarray[index])
+  );
+
+  return result;
+}
+
+/*
+* @name: xor
+* @description: Keeps only those elements that occure once in all arrays.
+* @arguments: arrays (...Array): The arrays to be processed.
+* @return: (Array) The processed array.
+*/
+
+function xor(...arrays) {
+  array = flatten(arrays)
+  return array.filter((value, index, arr) => arr.indexOf(value) === arr.lastIndexOf(value));
+}
+
+/*
+* @name: xorOdd
+* @description: Keeps only those elements that occure odd times in all arrays.
+* @arguments: arrays (...Array): The arrays to be processed.
+* @return: (Array) The processed array.
+*/
+
+function xorOdd(...arrays) {
+  const frequencyMap = new Map();
+
+  arrays.forEach(arr => {
+    const uniqueElements = new Set(arr);
+    
+    uniqueElements.forEach(element => {
+      frequencyMap.set(element, (frequencyMap.get(element) || 0) + 1);
+    });
+  });
+
+  const result = arrays.flat().filter(element => frequencyMap.get(element) % 2 === 1);
+
+  return unique(result);
+}
+
+/*
+* @name: zip
+* @description: Creates an array of grouped elements, the first of which contains the first elements of the given arrays, the second of which contains the second elements of the given arrays, and so on.
+* @arguments: arrays (...Array): The arrays to be processed.
+* @return: (Array) The processed array.
+*/
+
+function zip(...arrays) {
+  const maxLength = Math.max(...arrays.map(arr => arr.length));
+
+  return Array.from({ length: maxLength }, (_, index) => arrays.map(arr => arr[index]));
+}
+
+/*
+* @name: zip
+* @description: This method is like _.fromPairs except that it accepts two arrays, one of property identifiers and one of corresponding values.
+* @arguments: keys (Array): The array of keys.
+*             values (Array): The array of corresponding values
+* @return: (Object) The new Object.
+*/
+
+function zipObject(keys, values) {
+    result = {};
+    length = keys.length > values.length ? keys.length : values.length;
+    for (let i = 0; i < length; i++) {
+      result[keys[i]] = values[i];
+    }
+    return result;
+}
