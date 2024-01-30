@@ -680,3 +680,62 @@ function zipObject(keys, values) {
     }
     return result;
 }
+
+
+/* FUNCTIONS */
+
+/*
+* @name: store
+* @description: Stores data into local storage
+* @arguments: data (*): Data that needs to be stored
+*             storageName (String): The name of the storage
+* @return: (boolean) True if no errors, false if there was an error
+*/
+
+function store(data, storageName) {
+  try {
+    localStorage.setItem(storageName, JSON.stringify(data));
+  } catch(error) {
+    return false;
+  }
+  return true;
+}
+
+/*
+* @name: get
+* @description: Gets data from storage
+* @arguments: storageName (String): The name of the storage
+* @return: (*) Data if everything is right, else error message
+*/
+
+function get(storageName) {
+  try {
+      return JSON.parse(localStorage.getItem(storageName));
+  } catch(error) {
+    return error;
+  }
+}
+
+/*
+* @name: isArray
+* @description: Checks if the value is array using Array.isArray()
+* @arguments: value (*): The value to be inspected
+* @return: (boolean) the result
+*/
+
+function isArray(value) {
+  return Array.isArray(value);
+}
+
+/* NUMBERS */
+
+/*
+* @name: add
+* @description: Adds to numbers
+* @arguments: value (*): The value to be inspected
+* @return: (boolean) the result
+*/
+
+function add(augend, addend) {
+  return augend + addend;
+}
