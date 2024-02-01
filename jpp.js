@@ -739,3 +739,20 @@ function isArray(value) {
 function add(augend, addend) {
   return augend + addend;
 }
+
+/*
+* @name: mean
+* @description: Evaluates the mean value of an array
+* @arguments: array (Array): The array to be processed
+* @return: (number) the result
+*/
+
+function mean(array) {
+  array.sort((a, b) => a - b)
+  if (array.length % 2 == 0) {
+    return (array[Math.floor(array.length / 2)] + array[Math.floor(array.length / 2) - 1]) / 2;
+  }
+  else {
+    return array[Math.floor(array.length / 2)];
+  }
+}
