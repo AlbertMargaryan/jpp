@@ -756,3 +756,38 @@ function mean(array) {
     return array[Math.floor(array.length / 2)];
   }
 }
+
+/*
+* @name: repeat
+* @description: Repeats the string n times
+* @arguments: string (String): The string to be processed
+*             n (number): How many times to repeat
+* @return: (string) the result
+*/
+
+function repeat(string='', n=1) {
+  result = string;
+  for (let i = 0; i < n; i++) {
+    result += string; 
+  }
+  return result;
+}
+
+/*
+* @name: repeat
+* @description: Loop to be executed n times
+* @arguments: func (Function): The function to be executed
+*             n (number): How many times to repeat
+* @return: (Boolean) True if correct, False if error
+*/
+
+function times(func, n=1) {
+  if (typeof func !== 'function'){
+    return false;
+  }
+
+  for (let i = 0; i < n; i++) {
+    func()
+  }
+  return true;
+}
