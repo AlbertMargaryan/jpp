@@ -791,3 +791,24 @@ function times(func, n=1) {
   }
   return true;
 }
+
+/*
+* @name: sumFlat
+* @description: Returns the sum of all number elements in an array at any level ov nest
+* @arguments: array (Array): The array to be processed
+* @return: (number) The sum of all numbers
+*/
+
+function sumFlat(array) {
+    let result = 0;
+
+    for(let i = 0; i < array.length; i++){
+      if (Array.isArray(array[i])){
+        result = result + sumFlat(array[i]);
+      }
+      else if (typeof array[i] === "number"){
+        result = result + array[i];
+      }
+    }
+    return result;
+}
