@@ -727,6 +727,98 @@ function isArray(value) {
   return Array.isArray(value);
 }
 
+/*
+* @name: sumFlat
+* @description: Returns the sum of all number elements in an array at any level ov nest
+* @arguments: array (Array): The array to be processed
+* @return: (number) The sum of all numbers
+*/
+
+function sumFlat(array) {
+  let result = 0;
+
+  for(let i = 0; i < array.length; i++){
+    if (Array.isArray(array[i])){
+      result = result + sumFlat(array[i]);
+    }
+    else if (typeof array[i] === "number"){
+      result = result + array[i];
+    }
+  }
+  return result;
+}
+
+/*
+* @name: addArrays
+* @description: This function adds up arrays you provide, even if they have different lengths. If an array doesn't have a value at a particular position, it treats it as if it's zero.
+* @arguments: ...arrays (...Array): The arrays to be processed
+* @return: (Array) The new array
+*/
+
+function addArrays(...arrays) {
+  const maxLength = Math.max(...arrays.map(arr => arr.length));
+  return Array.from({ length: maxLength }, (_, i) =>
+    arrays.reduce((sum, array) => sum + (array[i] || 0), 0)
+  );
+}
+
+/*
+* @name: subtractArrays
+* @description: Subtract all the arrays from the array that has maximum number of elements.
+* @arguments: ...arrays (...Array): The arrays to be processed
+* @return: (Array) The new array
+*/
+
+function subtractArrays(...arrays) {
+  const maxLength = Math.max(...arrays.map(arr => arr.length));
+  const largestArray = arrays.find(arr => arr.length === maxLength);
+  return largestArray.map((value, i) => {
+    let result = value;
+    arrays.forEach((array, index) => {
+      if (index !== arrays.indexOf(largestArray)) {
+        result -= array[i] || 0;
+      }
+    });
+    return result;
+  });
+}
+
+/*
+* @name: addArrays
+* @description: This function multiplies up arrays you provide, even if they have different lengths. If an array doesn't have a value at a particular position, it treats it as if it's one.
+* @arguments: ...arrays (...Array): The arrays to be processed
+* @return: (Array) The new array
+*/
+
+function multArrays(...arrays) {
+  const maxLength = Math.max(...arrays.map(arr => arr.length));
+  return Array.from({ length: maxLength }, (_, i) =>
+    arrays.reduce((sum, array) => sum * (array[i] || 1), 1)
+  );
+}
+
+/*
+* @name: divideArrays
+* @description: Divide the array that has maximum number of elements by all the elements of the arrays.
+* @arguments: ...arrays (...Array): The arrays to be processed
+* @return: (Array) The new array
+*/
+
+function divideArrays(...arrays) {
+  const maxLength = Math.max(...arrays.map(arr => arr.length));
+  const largestArray = arrays.find(arr => arr.length === maxLength);
+  return largestArray.map((value, i) => {
+    let result = value;
+    arrays.forEach((array, index) => {
+      if (index !== arrays.indexOf(largestArray) && array[i] !== 0 && typeof array[i] !== 'undefined') {
+        result /= array[i];
+      }
+    });
+    return result;
+  });
+}
+console.log(divideArrays([1, 2, 3], [4, 5], [6, 7, 8, 9], [10]))
+
 /* NUMBERS */
 
 /*
@@ -792,23 +884,3 @@ function times(func, n=1) {
   return true;
 }
 
-/*
-* @name: sumFlat
-* @description: Returns the sum of all number elements in an array at any level ov nest
-* @arguments: array (Array): The array to be processed
-* @return: (number) The sum of all numbers
-*/
-
-function sumFlat(array) {
-    let result = 0;
-
-    for(let i = 0; i < array.length; i++){
-      if (Array.isArray(array[i])){
-        result = result + sumFlat(array[i]);
-      }
-      else if (typeof array[i] === "number"){
-        result = result + array[i];
-      }
-    }
-    return result;
-}
