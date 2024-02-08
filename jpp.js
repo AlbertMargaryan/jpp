@@ -253,7 +253,7 @@ function flattenDepth(array, depth) {
 
 /*
 * @name: sumArray
-* @description: Returns the sum of all numbers in the array, at any level of nesting.
+* @description: Returns the sum of all numbers in the array, at first level of nesting
 * @arguments: array (Array): The array to process.
 * @return: (number) Sum of all numbers in the array.
 */
@@ -261,10 +261,7 @@ function flattenDepth(array, depth) {
 function sumArray(array) {
     result = 0
     array.forEach((e) => {
-      if (Array.isArray(e)) {
-        result += sumArray(e);
-      }
-      else if (typeof(e) === 'number') {
+      if (typeof(e) === 'number') {
         result += e;
       }
     });
@@ -729,7 +726,7 @@ function isArray(value) {
 
 /*
 * @name: sumFlat
-* @description: Returns the sum of all number elements in an array at any level ov nest
+* @description: Returns the sum of all number elements in an array at any level of nest
 * @arguments: array (Array): The array to be processed
 * @return: (number) The sum of all numbers
 */
@@ -817,7 +814,41 @@ function divideArrays(...arrays) {
     return result;
   });
 }
-console.log(divideArrays([1, 2, 3], [4, 5], [6, 7, 8, 9], [10]))
+
+/*
+* @name: pow
+* @description: Returns array's first element in the power of the second element.
+* @arguments: array (Array): The array to be processed
+* @return: (number) The power.
+*/
+
+function pow(array) {
+  return Math.pow(array[0], array[1]);
+}
+
+/*
+* @name: isAscending
+* @description: Returns true if the given array is ascending by comparing overall rise and fall of each point.
+* @arguments: array (Array): The array to be processed
+* @return: (boolean) The result.
+*/
+
+function isAscending(array) {
+  if (!array) {
+    return undefined;
+  }
+  let rise = 0;
+  let fall = 0;
+  for (let i = 1; i < array.length; i++) {
+    if (array[i] > array[i-1]) {
+      rise += array[i] - array[i-1];
+    }
+    else if (array[i] < array [i-1]) {
+      fall += array[i-1] - array[i];
+    }
+  }
+  return rise > fall;
+}
 
 /* NUMBERS */
 
@@ -884,3 +915,28 @@ function times(func, n=1) {
   return true;
 }
 
+/*ARRAYS SORTING*/
+
+/*
+* @name: stalin
+* @description: Sorts an array by eliminating all the elements that are making the array unsorted.
+* @arguments: array (Array): The array to be purged!
+*             ascending=true (boolean): Sort in ascending or descending
+* @return: (Array) The purged array.
+*/
+
+function stalin(array, ascending = true) {
+  if (!array) {
+    return 0;
+  }
+  result = [array[0]]
+  for (let i = 1; i < array.length; i++) {
+    if (array[i] > result.at(-1) && ascending) {
+      result.push(array[i]);
+    }
+    else if (array[i] < result.at(-1) && !ascending) {
+      result.push(array[i]);
+    }
+  }
+  return result;
+}
