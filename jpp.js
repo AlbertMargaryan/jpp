@@ -564,6 +564,23 @@ function takeRight(array, n=1) {
 }
 
 /*
+* @name: toNumber
+* @description: Concatinates all the numbers in the array to a single number, exluding anything that comes after the decimapl point,
+* @arguments: array (Array): The array to be processed.
+* @return: (number) The new number.
+*/
+
+function toNumber(array) {
+  let result = '';
+  array.forEach((e) => {
+    if (typeof(e) === 'number'){
+      result += parseInt(e);
+    }
+  })
+  return parseInt(result);
+}
+
+/*
 * @name: union
 * @description: Makes union array of all unique arrays provided
 * @arguments: arrays (...Array): The arrays to be processed.
