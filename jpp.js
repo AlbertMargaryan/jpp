@@ -881,13 +881,13 @@ function add(augend, addend) {
 }
 
 /*
-* @name: mean
-* @description: Evaluates the mean value of an array
+* @name: median
+* @description: Evaluates the median value of an array
 * @arguments: array (Array): The array to be processed
 * @return: (number) the result
 */
 
-function mean(array) {
+function median(array) {
   array.sort((a, b) => a - b)
   if (array.length % 2 == 0) {
     return (array[Math.floor(array.length / 2)] + array[Math.floor(array.length / 2) - 1]) / 2;
@@ -895,6 +895,25 @@ function mean(array) {
   else {
     return array[Math.floor(array.length / 2)];
   }
+}
+
+/*
+* @name: median
+* @description: Evaluates the mean value of all number elements of the array
+* @arguments: array (Array): The array to be processed
+* @return: (number) the result
+*/
+
+function mean(array) {
+  let length = 0;
+  let sum = 0
+  array.forEach((e) => {
+    if(typeof(e) === 'number') {
+      sum += e;
+      length++;
+    }
+  })
+  return sum/length;
 }
 
 /*
@@ -911,6 +930,30 @@ function repeat(string='', n=1) {
     result += string; 
   }
   return result;
+}
+
+
+/*
+* @name: median
+* @description: Evaluates the range of an array, after sorting it.
+* @arguments: array (Array): The array to be processed
+* @return: (number) the result
+*/
+
+function range(array) {
+  array.sort((a,b) => {return a-b})
+  return array.at(-1) - array[0];
+}
+
+/*
+* @name: median
+* @description: Evaluates the range of an array. Designed for already sorted arrays.
+* @arguments: array (Array): The array to be processed
+* @return: (number) the result
+*/
+
+function rangeSorted(array) {
+  return array.at(-1) - array[0];
 }
 
 /*
